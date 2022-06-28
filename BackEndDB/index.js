@@ -10,33 +10,30 @@ app.use(express.json()); // This is middleware that auto parses JSON into JS obj
 app.use(cors()); // Allow all traffic
 app.use(logger); // uses the middleware logger
 
-app.get('/',(req,res) => {
-    res.send('Hi! Welcome to the homepage!!')
-});
+const flightRouter = require('./routes/flight.route.js');
+app.use('/flights',flightRouter);
 
-app.get('/flights',(req,res) => {
-    res.write('Here are all the current flights availible');
-    res.write('Please select a specific flight whenever you are ready.')
-    res.send(); // sends the above mesage(s) on a response object back to the client
-});
 
-app.get('/flights/:id',(req,res) => {
-    const {id} = req.params;
-    res.send(`Here is a flight with id of ${id}!`)
-})
-
-app.post('/flights',(req,res) => {
-    const data = req.body; 
-    console.log(data);
-    data.finish = 'This is the end of the request!'
-    res.status(201).json(data);
-})
 app.all('*', (req, res) => {
     console.log('Request received'); // This just prints on the server side
 
     // I can chain and continuosly build out my response object using the builder design pattern
     res.status(404).type('.html').send('<b>This is not the page you are looking for</b>');
 });
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Successfully connected to MongoDB!');
+    })
+    .catch(err => {
+        console.error(err);
+        // Options
+        // Connect to fallback database
+        // OR
+        // Terminate process
+        process.exit(1);
+    });
+
 
 // runs the server on the following port
 app.listen(PORT, () => {
