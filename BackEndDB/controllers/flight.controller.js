@@ -42,6 +42,33 @@ const findAllFlights = async (limit=0) => {
     return flights;
 }
 
+const deleteAFlight = async id => {
+    try {
 
+        const flight = await Flight.findByIdAndDelete(id);
+        if(flight == null) { // if id doesn't exist
+           throw `No Flight with the id of ${id} was found to be deleted, please go back and try again.`;
+        }
+            return `Flight with ${id} has been found and deleted`;
 
-module.exports = {createFlight, findAllFlights, findFlightById};
+    } catch(err){
+        console.error(err);
+        throw {status:404, message:err};
+    };
+    
+}
+
+const updateAFlight = async (id,{flightNumber,departureDate,arrivalDate,departureTime,arrivalTime,departureAirport,arrivalAirport,passengerLimit,currentNumPassengers}) => {
+    try {
+        const flight = await Flight.findByIdAndUpdate(id,{ $push: {flightNumber,departureDate,arrivalDate,departureTime,arrivalTime,departureAirport,arrivalAirport,passengerLimit,currentNumPassengers}});
+        if (flight == null) { //checking id validity
+            throw `No flight with ${id} availible to update`;
+        }
+        return `Flight with ${id} has been updated`;
+    } catch (err) {
+        console.error(err);
+        throw { status:404, message:err};
+    }
+}
+
+module.exports = {createFlight, findAllFlights, findFlightById, deleteAFlight,updateAFlight};
