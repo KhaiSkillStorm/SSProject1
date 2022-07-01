@@ -58,16 +58,16 @@ const deleteAFlight = async id => {
     
 }
 
-const updateAFlight = async (id,{flightNumber,departureDate,arrivalDate,departureTime,arrivalTime,departureAirport,arrivalAirport,passengerLimit,currentNumPassengers}) => {
-    try {
-        const flight = await Flight.findByIdAndUpdate(id,{ $push: {flightNumber,departureDate,arrivalDate,departureTime,arrivalTime,departureAirport,arrivalAirport,passengerLimit,currentNumPassengers}});
-        if (flight == null) { //checking id validity
-            throw `No flight with ${id} availible to update`;
+const updateAFlight = async (id,updatedFlight) =>{
+    try{
+       const newflight= await Flight.findByIdAndUpdate(id,updatedFlight,{new:true});
+        if (newflight == null){ // if no flight found, advise to create one
+            throw `The flight id ${ id } does not exist, please create it first!`
         }
-        return `Flight with ${id} has been updated`;
-    } catch (err) {
+        return newflight; // return results
+    } catch (err){
         console.error(err);
-        throw { status:404, message:err};
+        throw { status: 404, message: err };
     }
 }
 

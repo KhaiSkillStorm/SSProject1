@@ -38,9 +38,11 @@ router.delete('/:id',async (req,res) => {
 
 router.put('/:id',async (req,res) => {
     try {
-        const flight = await updateAFlight(req.params.id,{req});
+        const flight = await updateAFlight(req.params.id,req.body);
+        res.status(201).json(flight);
     } catch(err)
     {
+        console.log('Were not able to update');
         res.status(err?.status || 400).json(err);
     }
 });
