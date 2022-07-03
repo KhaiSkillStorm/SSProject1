@@ -13,7 +13,7 @@ export const FlightList = () => {
 
     return (
         <div>
-            {/* Transform the movies array into an array of JSX elements */}
+            {/* Transform the flights array into an array of JSX elements */}
             {flights.map((flight, index) => {
                 // For our keys, we should use some unique property for the key value
                 // Using index is a last resort if you have nothing else to use
@@ -29,7 +29,7 @@ export const FlightList = () => {
                         <div><strong>{flight.arrivalAirport}</strong></div>
                         <div><strong>{flight.passengerLimit}</strong></div>
                         <div>Current Passenger Total: {flight.currentNumPassengers}</div>
-
+                        <button onclick="deleteAFlight()">Delete a flight</button>
                     </div>
                 );
             })}
