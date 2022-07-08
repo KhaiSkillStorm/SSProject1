@@ -45,7 +45,7 @@ const findFlightByName = async flightName => {
                 throw `No Flight with the name of ${flightName} was found, please go back and try again.`;
              }
              const flightid = flight._id; 
-             return `hi this is the ${flightid} and here is the rest of the data ${flight}`; //returns the flight that was found by the id
+             return flightid; //returns the flight that was found by the id
     } catch (err) {
         console.error(err);
         throw {status:404, message:err}; // basically rejecting a promise
@@ -74,19 +74,20 @@ const deleteAFlight = async id => {
 
 const deleteFlightByName = async flightNumber2 => {
     try{
-    var flight = await Flight.find({ flightNumber: flightNumber2});
-    const flightid = flight._id;
+    const flight2 = await findFlightByName(flightNumber2);
+   const flight3 =  await deleteAFlight(flight2);
     // deleteAFlight(flightid);
     // const flight = await Flight.findOneAndDelete({flightNumber:fNum});
-    if(flight == null) {
+    if(flight3 == null) {
         throw `No flight with the flightNumber ${flightNumber2} was found to be deleted, please go back and try again`;
     } 
-        return flight;
+    return flight3;
 } catch(err) {
     console.error(err);
     throw {status: 404, message:err};
 };
 }
+
 const updateAFlight = async (id,updatedFlight) =>{
     try{
        const newflight= await Flight.findByIdAndUpdate(id,updatedFlight,{new:true});
