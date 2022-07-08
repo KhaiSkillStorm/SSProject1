@@ -88,6 +88,7 @@ const deleteFlightByName = async flightNumber2 => {
 };
 }
 
+
 const updateAFlight = async (id,updatedFlight) =>{
     try{
        const newflight= await Flight.findByIdAndUpdate(id,updatedFlight,{new:true});
@@ -100,5 +101,17 @@ const updateAFlight = async (id,updatedFlight) =>{
         throw { status: 404, message: err };
     }
 }
-
-module.exports = {createFlight, findAllFlights, findFlightById, deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName};
+const updateAFlightByName = async (name,updatedFlight) =>{
+    try{
+       const newflight= await findFlightByName(name);
+       const newflight2 = await updateAFlight(newflight,updatedFlight);
+        if (newflight2 == null){ // if no flight found, advise to create one
+            throw `The flight with the name of ${ name } does not exist, please create it first!`
+        }
+        return newflight2; // return results
+    } catch (err){
+        console.error(err);
+        throw { status: 404, message: err };
+    }
+}
+module.exports = {createFlight, findAllFlights, findFlightById, deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName,updateAFlightByName};

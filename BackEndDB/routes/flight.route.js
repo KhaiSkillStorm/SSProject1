@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {createFlight,findAllFlights,findFlightById,deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName} = require('../controllers/flight.controller');
+const {createFlight,findAllFlights,findFlightById,deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName, updateAFlightByName} = require('../controllers/flight.controller');
 // router for commands using flight
 
 
@@ -56,9 +56,19 @@ router.delete('/delete/fn/:flightNumber2',async (req,res) => {
         res.status(err?.status || 400).json(err);
     }
 });
-router.put('/:id',async (req,res) => {
+router.put('/update/id/:id',async (req,res) => {
     try {
         const flight = await updateAFlight(req.params.id,req.body);
+        res.status(201).json(flight);
+    } catch(err)
+    {
+        console.log('Were not able to update');
+        res.status(err?.status || 400).json(err);
+    }
+});
+router.put('/update/fn/:name',async (req,res) => {
+    try {
+        const flight = await updateAFlightByName(req.params.name,req.body);
         res.status(201).json(flight);
     } catch(err)
     {

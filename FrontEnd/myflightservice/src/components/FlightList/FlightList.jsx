@@ -30,7 +30,6 @@ export const FlightList = () => {
                         <div><strong>{flight.arrivalAirport}</strong></div>
                         <div><strong>{flight.passengerLimit}</strong></div>
                         <div>Current Passenger Total: {flight.currentNumPassengers}</div>
-                        <input id="clickMe" type="button" value="clickme" onclick="doFunction();" />
                     </div>
                 );
             })}

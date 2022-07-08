@@ -1,4 +1,4 @@
-import { FlightList } from "../components/FlightList";
+import { FlightList } from "../components/FlightList/FlightList";
 
 export const Flights = () => {
     return (
