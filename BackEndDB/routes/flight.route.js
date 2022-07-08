@@ -9,16 +9,16 @@ router.get('/', async (req,res) => {
     res.json(flights);
 });
 
-// router.get('/:id',async (req,res) => {
-//     try {
-//         const flight = await findFlightById(req.params.id);
-//         res.json(flight);
-//     } catch (err) {
-//         res.status(err?.status || 400).json(err);
-//     }
-// });
+router.get('/byid/:id',async (req,res) => {
+    try {
+        const flight = await findFlightById(req.params.id);
+        res.json(flight);
+    } catch (err) {
+        res.status(err?.status || 400).json(err);
+    }
+});
 
-router.get('/:flightName',async (req,res) => {
+router.get('/byfn/:flightName',async (req,res) => {
     try {
         const flight = await findFlightByName(req.params.flightName);
         res.json(flight);
@@ -37,18 +37,18 @@ router.post('/',async (req,res) => {
     }
 });
 
-// router.delete('/:id',async (req,res) => {
-//     try {
+router.delete('/delete/id/:id',async (req,res) => {
+    try {
 
-//         const flight = await deleteAFlight(req.params.id);
-//         console.log(`hi`);
-//         res.json(flight);
-//     } catch(err) {
-//         res.status(err?.status || 400).json(err);
-//     }
-// });
+        const flight = await deleteAFlight(req.params.id);
+        console.log(`hi`);
+        res.json(flight);
+    } catch(err) {
+        res.status(err?.status || 400).json(err);
+    }
+});
 
-router.delete('/delete/:flightNumber2',async (req,res) => {
+router.delete('/delete/fn/:flightNumber2',async (req,res) => {
     try {
         const flight = await deleteFlightByName(req.params.flightNumber2);
         res.json(flight);
