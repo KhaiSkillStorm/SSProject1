@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {createFlight,findAllFlights,findFlightById,deleteAFlight,updateAFlight} = require('../controllers/flight.controller');
+const {createFlight,findAllFlights,findFlightById,deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName} = require('../controllers/flight.controller');
 // router for commands using flight
 
 
@@ -9,14 +9,24 @@ router.get('/', async (req,res) => {
     res.json(flights);
 });
 
-router.get('/:id',async (req,res) => {
+// router.get('/:id',async (req,res) => {
+//     try {
+//         const flight = await findFlightById(req.params.id);
+//         res.json(flight);
+//     } catch (err) {
+//         res.status(err?.status || 400).json(err);
+//     }
+// });
+
+router.get('/:flightName',async (req,res) => {
     try {
-        const flight = await findFlightById(req.params.id);
+        const flight = await findFlightByName(req.params.flightName);
         res.json(flight);
     } catch (err) {
         res.status(err?.status || 400).json(err);
     }
 });
+
 
 router.post('/',async (req,res) => {
     try {
@@ -27,15 +37,25 @@ router.post('/',async (req,res) => {
     }
 });
 
-router.delete('/:id',async (req,res) => {
+// router.delete('/:id',async (req,res) => {
+//     try {
+
+//         const flight = await deleteAFlight(req.params.id);
+//         console.log(`hi`);
+//         res.json(flight);
+//     } catch(err) {
+//         res.status(err?.status || 400).json(err);
+//     }
+// });
+
+router.delete('/delete/:flightNumber2',async (req,res) => {
     try {
-        const flight = await deleteAFlight(req.params.id);
+        const flight = await deleteFlightByName(req.params.flightNumber2);
         res.json(flight);
     } catch(err) {
         res.status(err?.status || 400).json(err);
     }
 });
-
 router.put('/:id',async (req,res) => {
     try {
         const flight = await updateAFlight(req.params.id,req.body);

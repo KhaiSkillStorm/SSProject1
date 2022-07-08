@@ -11,6 +11,7 @@ export const FlightList = () => {
             .then(res => setFlights(res.data));
     }, []);
 
+
     return (
         <div>
             {/* Transform the flights array into an array of JSX elements */}
@@ -29,7 +30,7 @@ export const FlightList = () => {
                         <div><strong>{flight.arrivalAirport}</strong></div>
                         <div><strong>{flight.passengerLimit}</strong></div>
                         <div>Current Passenger Total: {flight.currentNumPassengers}</div>
-                        <button onclick="deleteAFlight()">Delete a flight</button>
+                        <input id="clickMe" type="button" value="clickme" onclick="doFunction();" />
                     </div>
                 );
             })}

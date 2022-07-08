@@ -1,3 +1,4 @@
+const { deleteOne } = require('../models/Flight.model');
 const Flight = require('../models/Flight.model');
 
 const createFlight = async ({flightNumber,departureDate,arrivalDate,departureTime,arrivalTime,departureAirport,arrivalAirport,passengerLimit,currentNumPassengers}) => {
@@ -36,6 +37,20 @@ const findFlightById = async id => {
         throw {status:404, message:err}; // basically rejecting a promise
     }
 }
+const findFlightByName = async flightName => {
+    try {
+             // If no movie is found, this does NOT return a rejected promise. Instead null is returned
+             var flight = await Flight.findOne({ flightNumber: flightName});
+             if(flight == null) { // if id doesn't exist
+                throw `No Flight with the name of ${flightName} was found, please go back and try again.`;
+             }
+             const flightid = flight._id; 
+             return `hi this is the ${flightid} and here is the rest of the data ${flight}`; //returns the flight that was found by the id
+    } catch (err) {
+        console.error(err);
+        throw {status:404, message:err}; // basically rejecting a promise
+    }
+}
 
 const findAllFlights = async (limit=0) => {
     const flights = await Flight.find(); // Get all flights
@@ -44,7 +59,6 @@ const findAllFlights = async (limit=0) => {
 
 const deleteAFlight = async id => {
     try {
-
         const flight = await Flight.findByIdAndDelete(id);
         if(flight == null) { // if id doesn't exist
            throw `No Flight with the id of ${id} was found to be deleted, please go back and try again.`;
@@ -58,6 +72,21 @@ const deleteAFlight = async id => {
     
 }
 
+const deleteFlightByName = async flightNumber2 => {
+    try{
+    var flight = await Flight.find({ flightNumber: flightNumber2});
+    const flightid = flight._id;
+    // deleteAFlight(flightid);
+    // const flight = await Flight.findOneAndDelete({flightNumber:fNum});
+    if(flight == null) {
+        throw `No flight with the flightNumber ${flightNumber2} was found to be deleted, please go back and try again`;
+    } 
+        return flight;
+} catch(err) {
+    console.error(err);
+    throw {status: 404, message:err};
+};
+}
 const updateAFlight = async (id,updatedFlight) =>{
     try{
        const newflight= await Flight.findByIdAndUpdate(id,updatedFlight,{new:true});
@@ -71,4 +100,4 @@ const updateAFlight = async (id,updatedFlight) =>{
     }
 }
 
-module.exports = {createFlight, findAllFlights, findFlightById, deleteAFlight,updateAFlight};
+module.exports = {createFlight, findAllFlights, findFlightById, deleteAFlight,updateAFlight,deleteFlightByName,findFlightByName};
