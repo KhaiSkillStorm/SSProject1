@@ -1,5 +1,3 @@
 ﻿# SSProject1
 
-https://stackoverflow.com/questions/24557580/how-to-return-the-objectid-or-id-of-an-document-in-mongodb-and-error-in-need
-
-https://stackoverflow.com/questions/24557580/how-to-return-the-objectid-or-id-of-an-document-in-mongodb-and-error-in-need
+Hello, This is my Project 1 from SkillStorm. This project focuses on a flight management service using express.js , mongodb, and react with javascript.
