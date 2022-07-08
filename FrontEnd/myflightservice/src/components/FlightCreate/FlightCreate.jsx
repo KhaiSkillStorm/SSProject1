@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './FlightCreate.css';
-
+import planecreation from './planecreation.jpg';
 export const FlightCreate = () => {
     const flightNumber = useRef();
     const departureDate = useRef();
@@ -19,16 +19,24 @@ export const FlightCreate = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            if (currentNumPassengers.current.value > passengerLimit.current.value){
+                alert("exceeded capacity");
+                currentNumPassengers.current.value = null;
+                passengerLimit.current.value = null;
+            } else{ 
             await axios.post('http://localhost:8089/flights', 
                             { flightNumber: flightNumber.current.value, departureDate: departureDate.current.value, arrivalDate: arrivalDate.current.value, departureTime: departureTime.current.value, arrivalTime: arrivalTime.current.value , departureAirport: departureAirport.current.value, arrivalAirport: arrivalAirport.current.value, passengerLimit: passengerLimit.current.value, currentNumPassengers: currentNumPassengers.current.value});
-            navigate('../', {replace: true});
+            navigate('/flights', {replace: true});
+            }
         } catch (error) {
+            alert("Flight ID already exists!");
             console.log('Something Went Wrong');
         }
     }
             return (
-                <> 
-               <center>
+                <div class="creation"> 
+                <center>
+                {/* <img src={planecreation} alt="flightbuild scene" width={1000}></img> */}
                 <form className="MyForm" onSubmit={handleSubmit}>
                         <label htmlFor="flightNumber">Flight Number:</label>
                             <div>
@@ -52,11 +60,11 @@ export const FlightCreate = () => {
                             </div>
                             <label htmlFor="departureAirport">Departure Airport:</label>
                             <div>
-                                <input id="departureAirport" type="text" placeholder="Departure Airport" ref={departureAirport} />
+                                <input id="departureAirport" type="text" placeholder="Departure Airport" ref={departureAirport} required/>
                             </div>
                             <label htmlFor="arrivalAirport">Arrival Airport:</label>
                             <div>
-                                <input id="arrivalAirport" type="text" placeholder="Arrival Airport" ref={arrivalAirport} />
+                                <input id="arrivalAirport" type="text" placeholder="Arrival Airport" ref={arrivalAirport} required/>
                             </div>
                             <label htmlFor="passengerLimit">Passenger Limit:</label>
                             <div>
@@ -64,11 +72,11 @@ export const FlightCreate = () => {
                             </div>
                             <label htmlFor="currentNumPassengers">Current Number Of Passengers:</label>
                             <div>
-                                <input id="currentNumPassengers" type="number" placeholder="current number of passengers" ref={currentNumPassengers} required step="1" max="{passengerLimit}"/>
+                                <input id="currentNumPassengers" type="number" placeholder="current number of passengers" ref={currentNumPassengers} required step="1" />
                             </div>
                             <input type="submit" value="Add Flight" />
                 </form>
                 </center>
-            </>
+            </div>
             );
 }

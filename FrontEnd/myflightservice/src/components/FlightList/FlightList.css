@@ -1,0 +1,24 @@
+.flights {
+    color:black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    background-color: rgb(162, 224, 253);
+    background-image: url(C:\Users\Meado\OneDrive\Documents\SSProject1\FrontEnd\myflightservice\src\planedestroy.jpg) ;
+}
+
+.flight {
+    flex-grow:1;
+    background-color:#3797cf;
+    margin: 5%;
+    border-radius: 95%;
+    border: rgb(230, 217, 46);
+
+}
+
+.flight:hover {
+    background-color: rgb(156, 241, 234);
+    transition: 100ms;
+}
+

@@ -1,0 +1,18 @@
+.MyForm {
+    border: 5px solid black;
+    border-radius: 40%;
+    /* background-color:#3797cf; */
+    background-color: rgb(230, 217, 46);
+    width: 16%;
+    height: 100%;
+    margin: auto;
+    padding: 10px;
+
+}
+
+#center {
+    background-color: black;
+}
+
+
+

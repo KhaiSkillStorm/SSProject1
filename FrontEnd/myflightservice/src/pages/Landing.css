@@ -1,0 +1,13 @@
+body {
+
+    background-color:rgb(130, 113, 230) ;
+}
+
+h1 {
+    color:white;
+}
+
+p {
+    color: orange;
+    font-family: Arial, Helvetica, sans-serif;
+}

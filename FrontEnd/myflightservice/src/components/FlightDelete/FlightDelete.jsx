@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-
+import './FlightDelete.css';
 import axios from 'axios';
 export const FlightDelete = () => {
     const flightNumber = useRef();
@@ -11,7 +11,7 @@ export const FlightDelete = () => {
         try {
             await axios.delete('http://localhost:8089/flights/delete/fn/'+ fn);
             alert("Flight Successfully deleted!!")
-            navigate('../', {replace: true});
+            navigate('/flights', {replace: true});
         } catch (error) {
             alert("Flight does not exist, try again!")
             console.log('Something Went Wrong');
@@ -19,8 +19,7 @@ export const FlightDelete = () => {
     }
 
     return (
-        <>
-        <h1> Deletion form is currently being added into front end</h1>
+        <body className="deletepage">
         <center>
                 <form className="MyForm" onSubmit={handleDelete}>
                         <label htmlFor="flightNumber">Flight Number:</label>
@@ -30,7 +29,7 @@ export const FlightDelete = () => {
                             <input type="submit" value="Delete Flight" />
                 </form>
                 </center>
-        </>
+        </body>
 
     );
 }

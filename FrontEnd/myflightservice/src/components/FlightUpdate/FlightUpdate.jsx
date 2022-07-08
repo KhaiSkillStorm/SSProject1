@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './FlightUpdate.css';
 // https://www.mattmorgante.com/technology/dropdown-with-react
 export const FlightUpdate = () => {
 
@@ -19,11 +20,17 @@ export const FlightUpdate = () => {
     const handleUpdate = async (event) => {
         event.preventDefault();
         try {
+            if (currentNumPassengers.current.value > passengerLimit.current.value){
+                alert("Too many passengers please adjust the limit!");
+            }
+            else {
             console.log(flightNumber.current.value);
             const fn = flightNumber.current.value;
             await axios.put('http://localhost:8089/flights/update/fn/'+ fn, 
                             { flightNumber: flightNumber.current.value, departureDate: departureDate.current.value, arrivalDate: arrivalDate.current.value, departureTime: departureTime.current.value, arrivalTime: arrivalTime.current.value , departureAirport: departureAirport.current.value, arrivalAirport: arrivalAirport.current.value, passengerLimit: passengerLimit.current.value, currentNumPassengers: currentNumPassengers.current.value});
-            navigate('../', {replace: true});
+            alert("Flight successfully updated");
+            navigate('/flights', {replace: true});
+            }
         } catch (error) {
             console.log('Something Went Wrong');
         }
@@ -33,8 +40,6 @@ export const FlightUpdate = () => {
     return (
         
         <>
-        <h1> Update Form is currently being worked on</h1>
-         
                <center>
                 <form className="MyForm" onSubmit={handleUpdate}>
                         <label htmlFor="flightNumber">Flight Number:</label>

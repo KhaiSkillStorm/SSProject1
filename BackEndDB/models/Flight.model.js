@@ -19,8 +19,7 @@ const flightSchema = new Schema({
     passengerLimit: Number,
     currentNumPassengers: {
         type: Number,
-        min: [0,'can not have lower than 0 passengers'],
-        max: [8, 'can not be larger than the limit variable']
+        min: [0,'can not have lower than 0 passengers']
     }
     
 });
